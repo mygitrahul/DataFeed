@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
-  version: "0.0.1"
-  title: Hello World App
+  version: "1.0.0"
+  title: DataFeed API-v1
 # during dev, should point to your local machine
 host: localhost:10010
 # basePath prefixes all resource paths 
@@ -17,42 +17,117 @@ consumes:
 # format of the responses to the client (Accepts)
 produces:
   - application/json
-x-a127-config: {}
-x-a127-services: {}
+x-a127-config:
+  remoteservice.key: &apigeeProxyKey CONFIGURED
+  remoteservice.uri: &apigeeProxyUri CONFIGURED
+  
+securityDefinitions:
+      apiKeyHeader:
+       type: apiKey
+       name: apikey
+       in: header
+       
+x-a127-services:
+      apiKeyHeader:
+        provider: volos-oauth-apigee
+        options:
+          key: *apigeeProxyKey
+          uri: *apigeeProxyUri
+
+
 paths:
-  /hello:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
-    x-a127-apply: {}
+  /accessory:
+    
+    x-swagger-router-controller: getAccessoriesController
+  
     get:
-      description: Returns 'Hello' to the caller
-      # used as the method name of the controller
-      operationId: hello
-      parameters:
-        - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
-        # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
+        description: Controller will return the customized responses
+        operationId: getAccessoriesFunction
+        security:
+          - apiKeyHeader: []
+        parameters:
+          - name: country
+            in: query
+            description: ""
+            type: string
+            required: true
+            default: "US"
+          - name: language
+            in: query
+            description: ""
+            type: string
+            required: true
+            default: "en"
+        responses:
+            "200":
+              description: Success
+              schema:
+                # a pointer to a definition
+                $ref: "#/definitions/CustomizedResponse"
+            # responses may fall through to errors
+            default:
+              description: Error
+              schema:
+                $ref: "#/definitions/ErrorResponse"
 # complex objects have schema definitions
 definitions:
-  HelloWorldResponse:
-    required:
-      - message
+  CustomizedResponse:
+    type: object
     properties:
-      message:
-        type: string
+      rss:
+        type: object
+        properties:
+            $default:
+              type: string
+              default: ""
+            "xmlns:g":
+              type: string
+              default: "http://base.google.com/ns/1.0"
+            version:
+              type: string
+              default: "2.0"
+            channel:
+                type: object
+                items:
+                  type: array
+                  properties:
+                    "g:id" :
+                      type: string
+                    "g:title" :
+                      type: string
+                    "description" :
+                      type: string
+                      default: ""
+                    "g:link" :
+                      type: string
+                    "g:image_link" :
+                      type: string
+                    "g:condition" :
+                      type: string
+                    "g:availability" :
+                      type: string
+                    "g:price" :
+                      type: string
+                    "g:gtin" :
+                      type: string     
+                    "g:mpn" :
+                      type: string    
+                    "g:brand" :
+                      type: string     
+                    "g:google_product_category" :
+                      type: string     
+                    "g:product_type" :
+                      type: string     
+                    "g:item_group_id" :
+                      type: string     
+                    "g:color" :
+                      type: string
+                      default: "NA"     
+                    "g:tax" :
+                      type: string     
+                    "g:shipping" :
+                      type: string  
+          
   ErrorResponse:
     required:
       - message
