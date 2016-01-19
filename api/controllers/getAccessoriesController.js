@@ -13,7 +13,6 @@
 var util = require('util');
 var request = require('request');
 
-var commonUtil = require('./common-util');
 
 /*
  Once you 'require' a module you can reference the things that it exports.  These are defined in module.exports.
@@ -28,7 +27,7 @@ var commonUtil = require('./common-util');
   we specify that in the exports of this module that 'hello' maps to the function named 'hello'
  */
 module.exports = {
-  getAccessoriesFunction: getAccessoriesFunction
+  getAccessories: getAccessories
 };
 
 /*
@@ -37,11 +36,13 @@ module.exports = {
   Param 1: a handle to the request object
   Param 2: a handle to the response object
  */
-function getAccessoriesFunction(req, res) {
+function getAccessories(req, res) {
   // variables defined in the Swagger document can be referenced using req.swagger.params.{parameter_name}
   var country = req.swagger.params.country.value;
   var language = req.swagger.params.language.value;
-  var url = commonUtil.getEndpointURL(req, res);
+
+  var url = "https://apiboss.aws.bugaboo.com/v2/catalog/products"+"?"+"country="+country+"&"+"language="+language;
+
   var locale = language+"_"+country ;
 
   var json_response = "";
@@ -56,40 +57,30 @@ function getAccessoriesFunction(req, res) {
     else {
 
       var customResponse = JSON.parse(body);
-
-      /**
-       * logic for c2 component
-       */
-
-      
-
         json_response = {};
                 var itemarr =[];
         for ( var productID in customResponse) {
         
           var roles = customResponse[productID]['roles'].join() ;         
-          if (roles.indexOf(commonUtil.ACCESSORY_CONSTANT)> -1) {
+          if (roles.indexOf("accessory")> -1) {
               for( var itemsKey in customResponse[productID].items){
               var itemrole = customResponse[productID].items[itemsKey]['roles'] ;
                             var channels = customResponse[productID].items[itemsKey]['channels'];             
-              if((itemrole.join().indexOf(commonUtil.ACCESSORY_CONSTANT)> -1) 
-                && (channels.join().indexOf(commonUtil.ECOM_LIFECYCLE_CONSTANT)< 0)){
-                //console.log("item"+customResponse[productID].items[itemsKey].itemcode);
-                //console.log("title"+customResponse[productID].items[itemsKey].name);
-                //console.log("g:link"+customResponse[productID].items[itemsKey].name);
+              if((itemrole.join().indexOf("accessory")> -1) 
+                && (channels.join().indexOf("eComm-outlet")< 0)){
                 var temp_item = {};
                 
                 // description 
                 var description ="";
-                /** To do
-                var descriptionarr = customResponse[productID].items[itemsKey]["descriptions"] ;
+                
+               /** var descriptionarr = customResponse[productID].items[itemsKey]["descriptions"] ;
                 for(var key in descriptionarr){
                    console.log(descriptionarr[key].languageCode);
                  if(descriptionarr[key].languageCode =="EN"){
                   description = descriptionarr[key].DescriptionShort ;
                   break ;
                  }
-                }**/
+                } */
                 
                 //link
                 var link="";
@@ -102,10 +93,8 @@ function getAccessoriesFunction(req, res) {
                 }
                 if("metaDescription" === key){
                   description = metadata[key];
-                  //console.log("description"+description);
                 }
                               }         
-                //console.log("pageurl-->" +pageurl);
                 
                 link = "https://www.bugaboo.com/"+country+"/"+locale+"/strollers/accessories/detail/"+pageurl;
                 
@@ -136,7 +125,6 @@ function getAccessoriesFunction(req, res) {
                 }
                 
                 //color
-                /**If it is XX set the the value as NA **/
                 var color ="";
                 if(customResponse[productID].items[itemsKey]["swatch"]){
                    color = customResponse[productID].items[itemsKey]["swatch"].name ;
@@ -168,7 +156,7 @@ function getAccessoriesFunction(req, res) {
                 temp_item = {
                 "g:id" :customResponse[productID].items[itemsKey].itemcode,
                 "g:title" :customResponse[productID].items[itemsKey].name+" "+color,
-                //"g:description" :description,
+                
                 "description" :description,
                 "g:link" :link,
                 "g:image_link" :imagelink,
@@ -192,7 +180,6 @@ function getAccessoriesFunction(req, res) {
               }
           }
         }
-       //console.log("itemarr length "+itemarr.length);
        var item = {"item" : itemarr};
        
       json_response = {"rss" : {"$default": "","xmlns:g": "http://base.google.com/ns/1.0","version": "2.0", "channel" : item}};

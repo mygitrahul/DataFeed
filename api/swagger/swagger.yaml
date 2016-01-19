@@ -42,7 +42,7 @@ paths:
   
     get:
         description: Controller will return the customized responses
-        operationId: getAccessoriesFunction
+        operationId: getAccessories
         security:
           - apiKeyHeader: []
         parameters:
