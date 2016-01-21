@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="3" name="DataFeed">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1453274418498</CreatedAt>
+    <CreatedBy>rahulshrivastava05@outlook.com</CreatedBy>
+    <DisplayName>DataFeed</DisplayName>
+    <LastModifiedAt>1453275534910</LastModifiedAt>
+    <LastModifiedBy>rahulshrivastava05@outlook.com</LastModifiedBy>
+    <Policies>
+        <Policy>RaiseFault-UnsupportedVerbError</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>node://.gitignore</Resource>
+        <Resource>node://README.md</Resource>
+        <Resource>node://api.zip</Resource>
+        <Resource>node://app.js</Resource>
+        <Resource>node://config.zip</Resource>
+        <Resource>node://deployments.zip</Resource>
+        <Resource>node://node_modules_a127-magic.zip</Resource>
+        <Resource>node://node_modules_express.zip</Resource>
+        <Resource>node://node_modules_should.zip</Resource>
+        <Resource>node://node_modules_supertest.zip</Resource>
+        <Resource>node://node_modules_volos-analytics-apigee.zip</Resource>
+        <Resource>node://node_modules_volos-analytics-common.zip</Resource>
+        <Resource>node://node_modules_volos-analytics-memory.zip</Resource>
+        <Resource>node://node_modules_volos-cache-apigee.zip</Resource>
+        <Resource>node://node_modules_volos-cache-memory.zip</Resource>
+        <Resource>node://node_modules_volos-cache-redis.zip</Resource>
+        <Resource>node://node_modules_volos-oauth-apigee.zip</Resource>
+        <Resource>node://node_modules_volos-oauth-redis.zip</Resource>
+        <Resource>node://node_modules_volos-quota-apigee.zip</Resource>
+        <Resource>node://node_modules_volos-quota-memory.zip</Resource>
+        <Resource>node://node_modules_volos-quota-redis.zip</Resource>
+        <Resource>node://node_modules_volos-spikearrest-memory.zip</Resource>
+        <Resource>node://package.json</Resource>
+        <Resource>node://test.zip</Resource>
+    </Resources>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+    <validate>false</validate>
+</APIProxy>
