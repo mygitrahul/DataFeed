@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage-SetVariables">
+    <DisplayName>AssignMessage-SetVariables</DisplayName>
+    <Properties/>
+    <AssignVariable>
+        <Name>country</Name>
+        <Ref>{request.queryparam.country}</Ref>
+        <Value>US</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>language</Name>
+        <Ref>{request.queryparam.language}</Ref>
+        <Value>en</Value>
+    </AssignVariable>
+    <!--<Set><QueryParams><QueryParam name="country">{request.queryparam.country}</QueryParam><QueryParam name="language">{request.queryparam.language}</QueryParam></QueryParams><Verb>GET</Verb></Set>-->
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault-UnsupportedVerbError">
+    <DisplayName>RaiseFault-UnsupportedVerbError</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers>
+                <Header name="X-Bugaboo-Exception">Method not allowed</Header>
+                <Header name="X-Bugaboo-Exception-Code">60</Header>
+                <Header name="X-Bugaboo-Exception-System">Bugaboo-API</Header>
+            </Headers>
+            <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">
+                {
+                    "code":"60",
+                    "message":"Method not allowed"
+                }
+                </Payload>
+            <StatusCode>403</StatusCode>
+            <ReasonPhrase>Method not allowed</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>
