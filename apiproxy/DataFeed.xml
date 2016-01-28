@@ -6,7 +6,9 @@
     <DisplayName>DataFeed</DisplayName>
     <LastModifiedAt>1453275534910</LastModifiedAt>
     <LastModifiedBy>rahulshrivastava05@outlook.com</LastModifiedBy>
-    <Policies>
+   <Policies>
+        <Policy>AssignMessage-SetVariables</Policy>
+        <Policy>RaiseFault-UnknownResource</Policy>
         <Policy>RaiseFault-UnsupportedVerbError</Policy>
     </Policies>
     <ProxyEndpoints>

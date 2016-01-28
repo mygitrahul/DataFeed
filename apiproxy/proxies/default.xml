@@ -2,10 +2,9 @@
 <ProxyEndpoint name="default">
     <Description/>
     <FaultRules/>
-    <PreFlow name="PreChecks">
+    <PreFlow name="PreFlow">
         <Request>
             <Step>
-                <FaultRules/>
                 <Name>RaiseFault-UnsupportedVerbError</Name>
                 <Condition>((proxy.pathsuffix MatchesPath "/*") and (request.verb != "GET"))</Condition>
             </Step>
@@ -14,13 +13,26 @@
     <Flows>
         <Flow name="accessory">
             <Description/>
-            <Request/>
+            <Request>
+                <Step>
+                    <Name>AssignMessage-SetVariables</Name>
+                </Step>
+            </Request>
             <Response/>
-            <Condition>(proxy.pathsuffix MatchesPath "/accessory") and (request.verb = "get")</Condition>
+            <Condition>(proxy.pathsuffix MatchesPath "/accessory") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="unknown-resource">
+            <Description>Unknown Resource</Description>
+            <Request>
+                <Step>
+                    <Name>RaiseFault-UnknownResource</Name>
+                </Step>
+            </Request>
+            <Response/>
         </Flow>
     </Flows>
     <HTTPProxyConnection>
-        <BasePath>/DataFeed</BasePath>
+        <BasePath>/datafeed</BasePath>
         <Properties/>
         <VirtualHost>default</VirtualHost>
         <VirtualHost>secure</VirtualHost>
