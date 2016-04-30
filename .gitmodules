@@ -1,0 +1,3 @@
+[submodule "myRepo"]
+	path = myRepo
+	url = https://github.com/mygitrahul/myRepo.git
